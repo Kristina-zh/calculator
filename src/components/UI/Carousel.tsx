@@ -1,39 +1,26 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Image from 'next/image';
 
-const CarouselFade = () => {
+interface Slide {
+  image: string;
+  alt: string;
+}
+
+interface CarouselFadeProps {
+  slides: Slide[];
+}
+
+const CarouselFade: React.FC<CarouselFadeProps> = ({ slides }) => {
   return (
     <Carousel fade style={{ "height": "100%" }}>
-      <Carousel.Item interval={3000} style={{ "height": "400px", "width": "800px" }}>
+      {slides.map((slide, index) => <Carousel.Item key={index} interval={3000} style={{ "height": "400px", "width": "800px" }}>
         <Image
-          src="/home.jpg"
-          alt="home slide image"
+          src={slide.image}
+          alt={slide.alt}
           fill
           style={{ objectFit: "cover" }}
         />
-        <Carousel.Caption>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={3000} style={{ "height": "400px", "width": "800px" }}>
-        <Image
-          src="/car.jpg"
-          alt="car slide image"
-          fill
-          style={{ objectFit: "cover" }}
-        />
-        <Carousel.Caption>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={3000} style={{ "height": "400px", "width": "800px" }}>
-        <Image
-          src="/trip.jpg"
-          alt="trip slide image"
-          fill
-          style={{ objectFit: "cover" }}
-        />
-        <Carousel.Caption>
-        </Carousel.Caption>
-      </Carousel.Item>
+      </Carousel.Item>)}
     </Carousel>
   );
 }
