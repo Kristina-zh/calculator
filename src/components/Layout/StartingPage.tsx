@@ -1,21 +1,37 @@
-import { useState } from 'react';
-//@ts-ignore
 import ReactTypingEffect from 'react-typing-effect';
-
 import Carousel from '@/components/UI/Carousel';
 
-const StartingHero = () => {
-  const [slideOrder, setSlideOrder] = useState(0);
+const slides = [
+  {
+    image: "/home.jpg",
+    alt: "home slide image"
+  },
+  {
+    image: "/car.jpg",
+    alt: "car slide image"
+  },
+  {
+    image: "/trip.jpg",
+    alt: "trip slide image"
+  }
+]
 
-  return <section className="d-flex flex-column justify-content-center align-items-center" style={{ "height": "100vh" }}>
-    <div className="overflow-hidden mx-auto mb-5" style={{ "height": "400px", "width": "800px" }}>
-      <Carousel />
+const StartingHero = () => {
+  return <section
+    className="d-flex flex-column justify-content-center align-items-center"
+    style={{ "height": "100vh" }}
+  >
+    <div
+      className="mx-auto mb-5"
+      style={{"maxWidth": "800px" }}
+    >
+      <Carousel slides={slides} />
     </div>
-    <h1 className="display-6 fw-bold text-white mb-3 ">Let&apos;s save money for the future <span className="text-primary">
+    <h1 className="display-6 fw-bold text-white mb-3">Save money for the future&nbsp;<span className="text-primary position-absolute">
       <ReactTypingEffect
         className="text-primary"
-        eraseDelay="500"
-        typingDelay="1450"
+        eraseDelay={500}
+        typingDelay={1450}
         text={["home", "auto", "trip"]}
       />
     </span>
