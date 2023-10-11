@@ -1,5 +1,11 @@
-//@ts-ignore
-const Input = ({ type, placeholder, value, onChange }) => {
+interface InputProps {
+  type: string;
+  placeholder: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Input: React.FC<InputProps> = ({ type, placeholder, value, onChange }) => {
   return (
     <div className="mb-3">
       <input
