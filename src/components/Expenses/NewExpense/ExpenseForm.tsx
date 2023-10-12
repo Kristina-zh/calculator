@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import moment from 'moment';
 import Input from "@/components/UI/Input";
+import Checkbox from '@/components/UI/Checkbox';
 
-//@ts-ignore
-const ExpenseForm = (props) => {
+interface ExpenseFormProps {
+  label: string;
+  onSaveExpenseData: (expenseData: IExpenseEnteredData) => void;
+  onCancel: () => void;
+}
+
+export interface IExpenseEnteredData {
+  title: string;
+  amount: number;
+  date?: Date;
+  isRegular: boolean;
+}
+
+export interface IExpenseData extends IExpenseEnteredData {
+  id: string;
+}
+
+const ExpenseForm: React.FC<ExpenseFormProps> = (props) => {
   const currentDate = moment().format('YYYY-MM');
 
   const [enteredTitle, setEnteredTitle] = useState('');
@@ -11,28 +28,7 @@ const ExpenseForm = (props) => {
   const [enteredDate, setEnteredDate] = useState(currentDate);
   const [enteredIsRegular, setEnteredIsRegular] = useState(false);
 
-  //@ts-ignore
-  const titleChangeHandler = (event) => {
-    setEnteredTitle(event.target.value);
-  };
-
-  //@ts-ignore
-  const amountChangeHandler = (event) => {
-    setEnteredAmount(event.target.value);
-  };
-
-  //@ts-ignore
-  const dateChangeHandler = (event) => {
-    setEnteredDate(event.target.value);
-  };
-
-  //@ts-ignore
-  const isRegularChangeHandler = (event) => {
-    setEnteredIsRegular(event.target.value);
-  };
-
-  //@ts-ignore
-  const inputChangeHandler = (identifier, event) => {
+  const inputChangeHandler = (identifier: string, event: ChangeEvent<HTMLInputElement>) => {
     const enteredValue = event.target.value;
 
     if (identifier === 'title') {
@@ -44,23 +40,21 @@ const ExpenseForm = (props) => {
     } else setEnteredIsRegular(Boolean(enteredValue));
   };
 
-  //@ts-ignore
-  const submitHandler = (event) => {
+  const submitHandler = (event: FormEvent) => {
     event.preventDefault();
 
-    const expenseData = {
+    const expenseData: IExpenseEnteredData = {
       title: enteredTitle,
       amount: +enteredAmount,
       date: new Date(enteredDate),
       isRegular: enteredIsRegular
     };
 
-    console.log('expenseData', expenseData)
-
     props.onSaveExpenseData(expenseData);
     setEnteredTitle('');
     setEnteredAmount('');
-    setEnteredDate('');
+    setEnteredDate(currentDate);
+    setEnteredIsRegular(false);
 
     props.onCancel();
   };
@@ -71,36 +65,30 @@ const ExpenseForm = (props) => {
         placeholder="Title"
         type="text"
         value={enteredTitle}
-        onChange={(e: any) => inputChangeHandler('title', e)}
+        onChange={(e) => inputChangeHandler('title', e)}
       />
       <Input
         placeholder="Amount"
         type="number"
-        //@ts-ignore
-        min="1"
-        step="1"
+        // min="1"
+        // step="1"
         value={enteredAmount}
-        onChange={(e: any) => inputChangeHandler('amount', e)}
+        onChange={(e) => inputChangeHandler('amount', e)}
       />
       <Input
         placeholder="Date"
         type="month"
-        //@ts-ignore
-        min="2023-10"
-        max="2030-10"
+        // min="2023-10"
+        // max="2030-10"
         value={enteredDate}
-        onChange={(e: any) => inputChangeHandler('date', e)}
+        onChange={(e) => inputChangeHandler('date', e)}
       />
-      <div className="form-check">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id="save-info"
-          //@ts-ignore
-          value={enteredIsRegular}
-          onChange={(e) => inputChangeHandler('isRegular', e)} />
-        <label className="form-check-label" htmlFor="save-info">Regular {props.label.toLowerCase()}</label>
-      </div>
+      <Checkbox
+        id="is-regular"
+        checked={enteredIsRegular}
+        onChange={(e) => inputChangeHandler('isRegular', e)}
+        label={`Regular ${props.label.toLowerCase()}`}
+      />
       <hr className="my-4"></hr>
 
       <div className="d-grid gap-2 d-md-flex justify-content-md-start">

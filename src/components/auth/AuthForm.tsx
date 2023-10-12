@@ -14,12 +14,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ label, handleClose }) => {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredIsRemember, setEnteredIsRemember] = useState(false);
 
-  const inputChangeHandler = (identifier: 'email' | 'password' | 'isRemember', event: ChangeEvent<HTMLInputElement>) => {    
+  const inputChangeHandler = (identifier: 'email' | 'password' | 'isRemember', event: ChangeEvent<HTMLInputElement>) => {
     const enteredValue = event.target.value;
 
     if (identifier === 'email') {
       setEnteredEmail(enteredValue);
-    } else if(identifier === 'password') {
+    } else if (identifier === 'password') {
       setEnteredPassword(enteredValue)
     } else if (identifier === 'isRemember') {
       setEnteredIsRemember(event.target.checked);
@@ -45,6 +45,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ label, handleClose }) => {
           onChange={(e: any) => inputChangeHandler('password', e)}
         />
         <Checkbox
+          id=""
           label="Remember me"
           checked={enteredIsRemember}
           onChange={(e: any) => inputChangeHandler('isRemember', e)}

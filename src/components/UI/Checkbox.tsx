@@ -2,9 +2,10 @@ interface CheckboxProps {
   checked: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
+  id: string
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, label }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, label, id }) => {
   return (
     <div className="form-group form-check">
       <input
@@ -12,9 +13,9 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, label }) => {
         className="form-check-input"
         checked={checked}
         onChange={onChange}
-        id={`checkbox-${label}`}
+        id={id}
       />
-      <label className="form-check-label" htmlFor={`checkbox-${label}`}>{label}</label>
+      <label className="form-check-label" htmlFor={id}>{label}</label>
     </div>
   );
 };

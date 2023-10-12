@@ -4,7 +4,7 @@ import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import StartingPage from "@/components/Layout/StartingPage";
 
-const isAuth = false;
+const isAuth = true;
 
 function Layout(props: any) {
   return  isAuth ? <>

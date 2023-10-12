@@ -1,4 +1,4 @@
-import Chart from '@/components/Chart/Chart';
+import Chart from '@/components/Expenses/Chart/Chart';
 
 //@ts-ignore
 const ExpenseChart = (props) => {
