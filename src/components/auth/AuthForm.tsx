@@ -14,7 +14,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ label, handleClose }) => {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [enteredIsRemember, setEnteredIsRemember] = useState(false);
 
-  const inputChangeHandler = (identifier: 'email' | 'password' | 'isRemember', event: ChangeEvent<HTMLInputElement>) => {
+  const inputChangeHandler = (
+    identifier: 'email' | 'password' | 'isRemember',
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     const enteredValue = event.target.value;
 
     if (identifier === 'email') {
@@ -35,20 +38,20 @@ const AuthForm: React.FC<AuthFormProps> = ({ label, handleClose }) => {
           aria-describedby="email"
           type="email"
           value={enteredEmail}
-          onChange={(e: any) => inputChangeHandler('email', e)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputChangeHandler('email', e)}
         />
         <Input
           placeholder="Password"
           aria-describedby="password"
           type="password"
           value={enteredPassword}
-          onChange={(e: any) => inputChangeHandler('password', e)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputChangeHandler('password', e)}
         />
         <Checkbox
           id=""
           label="Remember me"
           checked={enteredIsRemember}
-          onChange={(e: any) => inputChangeHandler('isRemember', e)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => inputChangeHandler('isRemember', e)}
         />
         <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
           <button type="submit" className="btn btn-primary btn-md px-4 me-md-2">

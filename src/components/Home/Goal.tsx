@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import { useState, FormEvent, ChangeEvent  } from 'react';
 import Image from 'next/image';
 import Input from '../UI/Input';
 
 import { expenses as expenseData } from '../../utils/expences';
 import { income as incomeData } from '../../utils/income';
 
+import { IExpenseData } from '../Expenses/NewExpense/ExpenseForm';
+
 const Goal: React.FC = () => {
   const [currentSavings, setCurrentSavings] = useState<number>(0);
   const [amountToCalculate, setAmountToCalculate] = useState<number>(0);
   const [calculatedDate, setCalculatedDate] = useState<string>('');
 
-  const handleCalculate = (e: React.FormEvent) => {
+  const handleCalculate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const targetAmount = currentSavings + amountToCalculate;
@@ -20,8 +22,7 @@ const Goal: React.FC = () => {
     setCalculatedDate(formattedDate);
   };
 
-  // Function to calculate the date when a certain amount will be saved
-  const calculateSavingDate = (targetAmount: number, incomeData: any[], expenseData: any[]) => {
+  const calculateSavingDate = (targetAmount: number, incomeData: IExpenseData[], expenseData: IExpenseData[]) => {
     let currentDate = new Date();
     let currentBalance = currentSavings;
 
@@ -57,8 +58,8 @@ const Goal: React.FC = () => {
         </div>
         <div className="col-lg-6">
           <form className="p-4 p-md-5 border rounded-3 bg-body-tertiary h-auto" onSubmit={handleCalculate}>
-            <Input placeholder="Current savings" type="number" value={currentSavings.toString()} onChange={(e: any) => setCurrentSavings(Number(e.target.value))} />
-            <Input placeholder="Amount to calculate" type="number" value={amountToCalculate.toString()} onChange={(e: any) => setAmountToCalculate(Number(e.target.value))} />
+            <Input placeholder="Current savings" type="number" value={currentSavings.toString()} onChange={(e: ChangeEvent<HTMLInputElement>) => setCurrentSavings(Number(e.target.value))} />
+            <Input placeholder="Amount to calculate" type="number" value={amountToCalculate.toString()} onChange={(e: ChangeEvent<HTMLInputElement>) => setAmountToCalculate(Number(e.target.value))} />
             <button className="mt-3 w-100 btn btn-md btn-primary" type="submit">Calculate</button>
             <hr className="my-4" />
             <small className="text-body-secondary">Date: <span className="text-black text-bold">{calculatedDate}</span></small>

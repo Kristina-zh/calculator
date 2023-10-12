@@ -1,5 +1,9 @@
-//@ts-ignore
-const Select = ({ selected, onChangeFilter }) => {
+interface SelectProps {
+  selected: string;
+  onChangeFilter: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const Select: React.FC<SelectProps> = ({ selected, onChangeFilter }) => {
   return <div className="mb-4 text-white d-flex align-items-center gap-3">
     <label className="font-weight-bold">Filter by year</label>
     <select className="form-select" aria-label="Filter for year" style={{ "width": "auto" }}

@@ -20,7 +20,16 @@ const Income = () => {
       ...enteredData,
       id: 'i' + Math.random().toString(),
     };
-    setIncome((prevState) => [incomeData, ...prevState]);
+
+    fetch('/api/income', {
+      method: 'POST',
+      body: JSON.stringify(incomeData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    // setIncome((prevState) => [incomeData, ...prevState]);
   };
 
   const updateExpenseHandler = (idToUpdate: string, updatedData: IExpenseData) => {

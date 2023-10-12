@@ -1,7 +1,10 @@
 import Chart from '@/components/Expenses/Chart/Chart';
 
-//@ts-ignore
-const ExpenseChart = (props) => {
+interface ExpenseChartProps {
+  expenses: { date: Date; amount: number }[];
+}
+
+const ExpenseChart: React.FC<ExpenseChartProps> = (props) => {
   const chartDataPoints = [
     { label: 'Jan', value: 0 },
     { label: 'Feb', value: 0 },

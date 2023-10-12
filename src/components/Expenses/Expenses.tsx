@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import ExpensesFilter from './ExpensesFilter';
 import ExpenseChart from './Chart/ExpenseChart';
 import Table from '@/components/UI/Table';
@@ -14,7 +14,7 @@ interface ExpensesProps {
 const Expenses: React.FC<ExpensesProps> = ({ data, onDelete, onUpdate }) => {
   const [filter, setFilter] = useState('2023');
 
-  const handleChangeFilter = (e: any) => {
+  const handleChangeFilter = (e: ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
   };
 
@@ -30,7 +30,7 @@ const Expenses: React.FC<ExpensesProps> = ({ data, onDelete, onUpdate }) => {
       <ExpensesFilter selected={filter} onChangeFilter={handleChangeFilter} />
       {/* <ExpenseChart expenses={filteredExpenses} /> */}
       <Card className="d-flex justify-content-between align-items-center p-2 my-4 bg-light">
-        <Table list={filteredExpenses} deleteItem={onDelete} updateItem={onUpdate} />
+        <Table list={filteredExpenses} deleteItem={onDelete} updateItem={() => { }} />
       </Card >
     </Card>
   );

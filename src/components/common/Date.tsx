@@ -1,5 +1,8 @@
-//@ts-ignore
-export const Date = ({date}) => {
+interface DateProps {
+  date: Date;
+}
+
+const Date: React.FC<DateProps> = ({ date }) => {
   const month = date.toLocaleString('en-us', { month: '2-digit' });
   const year = date.getFullYear();
   const day = date.toLocaleString('en-us', { day: '2-digit' });
@@ -12,3 +15,5 @@ export const Date = ({date}) => {
     </div>
   );
 };
+
+export default Date;

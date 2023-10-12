@@ -1,7 +1,13 @@
 import { calculateDate } from '@/utils/calculateDate';
+import { IExpenseData } from '@/components/Expenses/NewExpense/ExpenseForm';
 
-//@ts-ignore
-const Table = ({ list, deleteItem, updateItem }) => {
+interface TableProps {
+  list: IExpenseData[];
+  deleteItem: (id: string) => void;
+  updateItem: () => void;
+}
+
+const Table: React.FC<TableProps> = ({ list, deleteItem, updateItem }) => {
   return (
     <table className="table table-hover">
       <thead>
@@ -16,7 +22,7 @@ const Table = ({ list, deleteItem, updateItem }) => {
         </tr>
       </thead>
       <tbody>
-        {list.map((item: any, index: any) => <tr key={index}>
+        {list.map((item, index) => <tr key={index}>
           <th scope="row" style={{ "verticalAlign": "middle" }} >{index + 1}</th>
           <td style={{ "verticalAlign": "middle" }}>{item.title}</td>
           <td style={{ "verticalAlign": "middle" }}>{item.amount}</td>

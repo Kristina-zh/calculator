@@ -1,7 +1,11 @@
-import Select from '@/components/UI/Select'
+import Select from '@/components/UI/Select';
 
-//@ts-ignore
-const ExpensesFilter = ({ selected, onChangeFilter }) => {
+interface ExpensesFilterProps {
+  selected: string;
+  onChangeFilter: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const ExpensesFilter: React.FC<ExpensesFilterProps> = ({ selected, onChangeFilter }) => {
   return (
     <div className="container">
       <Select selected={selected} onChangeFilter={onChangeFilter} />
@@ -9,4 +13,4 @@ const ExpensesFilter = ({ selected, onChangeFilter }) => {
   );
 };
 
-export default ExpensesFilter
+export default ExpensesFilter;
