@@ -1,8 +1,15 @@
 import ChartBar from './ChartBar';
 
-//@ts-ignore
-const Chart = (props) => {
-  //@ts-ignore
+interface DataPoint {
+  label: string;
+  value: number;
+}
+
+interface ChartProps {
+  dataPoints: DataPoint[];
+}
+
+const Chart: React.FC<ChartProps> = (props) => {
   const dataPountsValues = props.dataPoints.map((dataPoint) => dataPoint.value);
   const totalMaximum = Math.max(...dataPountsValues);
 
@@ -10,7 +17,7 @@ const Chart = (props) => {
     <div className="p-4 rounded-3 bg-light text-center d-flex justify-content-around"
       style={{ "height": "10rem" }}
     >
-      {props.dataPoints.map((dataPoint: any) => (
+      {props.dataPoints.map((dataPoint) => (
         <ChartBar
           key={dataPoint.label}
           value={dataPoint.value}
