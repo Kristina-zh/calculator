@@ -8,21 +8,21 @@ import { IExpenseData } from "@/components/Expenses/NewExpense/ExpenseForm";
 interface ExpensesProps {
   data: IExpenseData[];
   onDelete: (idToDelete: string) => void;
-  onUpdate: (idToUpdate: string, updatedData: IExpenseData) => void;
+  handleEditClick: (idToUpdate: string) => void;
 }
 
-const Expenses: React.FC<ExpensesProps> = ({ data, onDelete, onUpdate }) => {
+const Expenses: React.FC<ExpensesProps> = ({ data, onDelete, handleEditClick }) => {
   const [filter, setFilter] = useState('2023');
 
   const handleChangeFilter = (e: ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
   };
 
-  const filteredExpenses = data.filter((expense) => {
+  const filteredExpenses = data?.filter((expense) => {
     if (expense.date) {
-      return expense.date.getFullYear().toString() === filter;
+      return expense.date.slice(0, 4) === filter;
     }
-    return false;
+    return expense;
   });
 
   return (
@@ -30,7 +30,7 @@ const Expenses: React.FC<ExpensesProps> = ({ data, onDelete, onUpdate }) => {
       <ExpensesFilter selected={filter} onChangeFilter={handleChangeFilter} />
       {/* <ExpenseChart expenses={filteredExpenses} /> */}
       <Card className="d-flex justify-content-between align-items-center p-2 my-4 bg-light">
-        <Table list={filteredExpenses} deleteItem={onDelete} updateItem={() => { }} />
+        <Table list={filteredExpenses} deleteItem={onDelete} handleEditClick={handleEditClick} />
       </Card >
     </Card>
   );
