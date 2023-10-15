@@ -5,28 +5,27 @@ import Checkbox from '@/components/UI/Checkbox';
 
 interface ExpenseFormProps {
   label: string;
-  onSaveExpenseData: (expenseData: IExpenseEnteredData) => void;
+  onSaveExpenseData: (updatedData: IExpenseData, id?: string) => void;
   onCancel: () => void;
+  editMode?: boolean;
+  itemToEdit?: any
 }
 
-export interface IExpenseEnteredData {
+export interface IExpenseData {
   title: string;
   amount: number;
-  date?: Date;
+  date?: string;
   isRegular: boolean;
-}
-
-export interface IExpenseData extends IExpenseEnteredData {
   id: string;
 }
 
 const ExpenseForm: React.FC<ExpenseFormProps> = (props) => {
   const currentDate = moment().format('YYYY-MM');
 
-  const [enteredTitle, setEnteredTitle] = useState('');
-  const [enteredAmount, setEnteredAmount] = useState('');
-  const [enteredDate, setEnteredDate] = useState(currentDate);
-  const [enteredIsRegular, setEnteredIsRegular] = useState(false);
+  const [enteredTitle, setEnteredTitle] = useState(props.editMode ? props.itemToEdit.title : '');
+  const [enteredAmount, setEnteredAmount] = useState(props.editMode ? props.itemToEdit.amount : '');
+  const [enteredDate, setEnteredDate] = useState((props.editMode && props.itemToEdit.date) ? (props.itemToEdit.date.slice(0, 7)) : currentDate);
+  const [enteredIsRegular, setEnteredIsRegular] = useState(props.editMode ? props.itemToEdit.isRegular : false);
 
   const inputChangeHandler = (identifier: string, event: ChangeEvent<HTMLInputElement>) => {
     const enteredValue = event.target.value;
@@ -37,20 +36,21 @@ const ExpenseForm: React.FC<ExpenseFormProps> = (props) => {
       setEnteredAmount(enteredValue);
     } else if (identifier === 'date') {
       setEnteredDate(enteredValue);
-    } else setEnteredIsRegular(Boolean(enteredValue));
+    } else setEnteredIsRegular(!enteredIsRegular);
   };
 
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
 
-    const expenseData: IExpenseEnteredData = {
+    const expenseData: IExpenseData = {
       title: enteredTitle,
       amount: +enteredAmount,
-      date: new Date(enteredDate),
-      isRegular: enteredIsRegular
+      date: enteredIsRegular ? undefined : enteredDate,
+      isRegular: enteredIsRegular,
+      id: 'i' + (Math.random() * 10000000000000000000).toString(),
     };
 
-    props.onSaveExpenseData(expenseData);
+    props.editMode ? props.onSaveExpenseData(expenseData, props.itemToEdit.id) : props.onSaveExpenseData(expenseData)
     setEnteredTitle('');
     setEnteredAmount('');
     setEnteredDate(currentDate);
@@ -93,7 +93,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = (props) => {
 
       <div className="d-grid gap-2 d-md-flex justify-content-md-start">
         <button type="submit" className="btn btn-primary btn-md px-4 me-md-2">
-          Add {props.label}
+          {props.editMode ? 'Edit ' : 'Add'} {props.label}
         </button>
         <button onClick={props.onCancel} type="button" className="btn btn-outline-secondary btn-md px-4">
           Cancel

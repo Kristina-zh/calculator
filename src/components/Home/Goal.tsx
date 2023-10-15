@@ -1,9 +1,6 @@
-import { useState, FormEvent, ChangeEvent  } from 'react';
+import { useState, useEffect, FormEvent, ChangeEvent  } from 'react';
 import Image from 'next/image';
 import Input from '../UI/Input';
-
-import { expenses as expenseData } from '../../utils/expences';
-import { income as incomeData } from '../../utils/income';
 
 import { IExpenseData } from '../Expenses/NewExpense/ExpenseForm';
 
@@ -11,12 +8,22 @@ const Goal: React.FC = () => {
   const [currentSavings, setCurrentSavings] = useState<number>(0);
   const [amountToCalculate, setAmountToCalculate] = useState<number>(0);
   const [calculatedDate, setCalculatedDate] = useState<string>('');
+  const [expensesData, setExpenses] = useState<IExpenseData[]>([]);
+  const [incomeData, setIncome] = useState<IExpenseData[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/expenses`).then(res => res.json()).then(data => setExpenses(data.expenses))
+  }, []);
+
+  useEffect(() => {
+    fetch(`/api/income`).then(res => res.json()).then(data => setIncome(data.income))
+  }, []);
 
   const handleCalculate = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const targetAmount = currentSavings + amountToCalculate;
-    const savingDate = calculateSavingDate(targetAmount, incomeData, expenseData);
+    const savingDate = calculateSavingDate(targetAmount, incomeData, expensesData);
     const formattedDate = savingDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 
     setCalculatedDate(formattedDate);
